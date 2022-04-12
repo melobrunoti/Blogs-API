@@ -1,3 +1,4 @@
+const { categoryScheme } = require('../helpers/categoryScheme');
 const { loginScheme } = require('../helpers/loginScheme');
 const { userScheme } = require('../helpers/userScheme');
 
@@ -19,7 +20,17 @@ const validateLogin = (req, res, next) => {
   next();
 };
 
+const validateCategory = (req, res, next) => {
+  const { error } = categoryScheme.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({ message: error.message });
+  }
+  next();
+};
+
 module.exports = {
   validateUser,
   validateLogin,
+  validateCategory,
 };

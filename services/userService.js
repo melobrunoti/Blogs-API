@@ -24,7 +24,7 @@ const getById = async (id) => {
   const users = await User.findByPk(id);
 
   if (!users) {
-    return false
+    return false;
   }
 
   return users;
