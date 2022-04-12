@@ -20,7 +20,18 @@ const getAll = async () => {
   return users;
 };
 
+const getById = async (id) => {
+  const users = await User.findByPk(id);
+
+  if (!users) {
+    return false
+  }
+
+  return users;
+};
+
 module.exports = {
   createUser,
   getAll,
+  getById,
 };

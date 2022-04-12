@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const authMiddleware = require('../middlewares/authentication');
-const {validateUser} = require('../middlewares/validations');
+const { validateUser } = require('../middlewares/validations');
 const userService = require('../services/userService');
 
 require('dotenv').config();
@@ -34,7 +34,20 @@ router.post('/', validateUser, async (req, res) => {
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const users = await userService.getAll();
-    console.log(users);
+    res.status(200).json(users);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Something got wrong' });
+  }
+});
+
+router.get('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const users = await userService.getById(id);
+    if (!users) {
+      return res.status(404).json({ message: 'User does not exist' });
+    }
     res.status(200).json(users);
   } catch (e) {
     console.log(e.message);
