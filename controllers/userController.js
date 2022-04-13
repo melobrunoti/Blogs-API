@@ -22,7 +22,7 @@ router.post('/', validateUser, async (req, res) => {
       algorithm: 'HS256',
     };
     
-    const token = jwt.sign({ data: newUser }, process.env.JWT, jwtConfig);
+    const token = jwt.sign({ data: newUser }, process.env.JWT_SECRET, jwtConfig);
 
     return res.status(201).json({ token });
   } catch (e) {
