@@ -25,4 +25,18 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
+router.get('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await postService.getById(id);
+    if (!post) {
+      return res.status(404).json({ message: 'Post does not exist' });
+    }
+    res.status(200).json(post);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Something got wrong' });
+  }
+});
+
 module.exports = router;
