@@ -15,4 +15,14 @@ router.post('/', authMiddleware, validatePost, validateCategoryExists, async (re
     res.status(201).json(newPost);
 });
 
+router.get('/', authMiddleware, async (req, res) => {
+  try {
+    const categories = await postService.getAll();
+    res.status(200).json(categories);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Something got wrong' });
+  }
+});
+
 module.exports = router;
