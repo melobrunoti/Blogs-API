@@ -15,7 +15,7 @@ const login = async (user) => {
     algorithm: 'HS256',
   };
 
-  const token = jwt.sign({ data: userLogin }, process.env.JWT, jwtConfig);
+  const token = jwt.sign({ data: userLogin }, process.env.JWT_SECRET, jwtConfig);
 
   if (!userLogin) {
     return false;
