@@ -4,9 +4,9 @@ const router = express.Router();
 const postService = require('../services/blogPostsService');
 const authMiddleware = require('../middlewares/authentication');
 /* const { createPostAndCategory } = require('../services/postCategoriesService'); */
-/* const { validateCategory } = require('../middlewares/validations'); */
+const { validateCategoryExists, validatePost } = require('../middlewares/validations');
 
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, validatePost, validateCategoryExists, async (req, res) => {
   const { id: userId } = req.user.data;
   const { title, content, categoryIds } = req.body;
 

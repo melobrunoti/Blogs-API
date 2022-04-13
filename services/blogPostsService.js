@@ -7,7 +7,6 @@ const create = async (userId, title, categoryIds, content) => {
     await PostCategory.create({ postId: newPost.id, categoryId });
   }));
 /*   await newPost.setCategories(categoryIds); */
-
   return newPost;
 };
 
