@@ -3,7 +3,6 @@ const { loginScheme } = require('../helpers/loginScheme');
 const { userScheme } = require('../helpers/userScheme');
 const { postScheme } = require('../helpers/postScheme');
 const categoriesService = require('../services/categoriesService');
-const { Category } = require("../models");
 
 const validateUser = (req, res, next) => {
   const { error } = userScheme.validate(req.body);
@@ -45,7 +44,7 @@ const validateCategoryExists = async (req, res, next) => {
   const { categoryIds } = req.body;
     let result = true;
      await Promise.all(categoryIds.map(async (id) => {
-     const categories = await Category.findOne({ where: id });
+     const categories = await categoriesService.getById(id);
      if (!categories) {
        result = false;
      }
