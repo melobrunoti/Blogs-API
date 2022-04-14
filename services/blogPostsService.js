@@ -8,6 +8,27 @@ const create = async (userId, title, categoryIds, content) => {
   return newPost;
 };
 
+const updatePost = async (id, title, content) => {
+  console.log({ id });
+  const post = await BlogPost.update({
+    title,
+    content,
+  }, { where: { id } });
+
+  if (!post) {
+    return false;
+  }
+
+  const updatedPost = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
+  return updatedPost;
+};
+
 const getAll = async () => {
   const posts = await BlogPost.findAll({
     include: [
@@ -20,7 +41,6 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-
   const post = await BlogPost.findOne({
     where: { id },
     include: [
@@ -40,4 +60,5 @@ module.exports = {
   create,
   getAll,
   getById,
+  updatePost,
 };
