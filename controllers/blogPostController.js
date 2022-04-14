@@ -55,4 +55,16 @@ router.put('/:id', authMiddleware, validateUserId, validateUpdatePost, async (re
   }
 });
 
+router.delete('/:id', authMiddleware, validateUserId, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await postService.deletePost({ id });
+  
+    res.status(204).end();
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Something got wrong' });
+  }
+});
+
 module.exports = router;
