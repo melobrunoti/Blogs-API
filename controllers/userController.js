@@ -55,4 +55,16 @@ router.get('/:id', authMiddleware, async (req, res) => {
   }
 });
 
+router.delete('/me', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.user.data;
+    await userService.deleteUser({ id });
+  
+    res.status(204).end();
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Something got wrong' });
+  }
+});
+
 module.exports = router;
